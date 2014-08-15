@@ -1,9 +1,7 @@
 <VirtualHost {{virtualHost}}:80>
   {{#if serverName}}ServerName {{serverName}}{{/if}}
-  {{#if documentRoot}}DocumentRoot {{documentRoot}}{{/if}}
-  {{#if ServerAlias}}ServerAlias {{serverAliases}}{{/if}}
-
-  DirectoryIndex index.html
+  {{#if ServerAlias}}ServerAlias {{ServerAlias}}{{/if}}
+  {{#if documentRoot}}DocumentRoot {{documentRoot}}
 
   <Directory "{{documentRoot}}">
       Options Indexes FollowSymLinks
@@ -11,17 +9,19 @@
       Options -Indexes
       Options +FollowSymLinks
   </Directory>
-
+{{/if}}
 </VirtualHost>
 
 {{#if ssl}}
 <VirtualHost {{virtualHost}}:443>
-     SSLEngine On
-     SSLCertificateFile /etc/apache2/ssl/binaryalchemist.crt
-     SSLCertificateKeyFile /etc/apache2/ssl/binaryalchemist.key
-
   {{#if serverName}}ServerName {{serverName}}{{/if}}
-  {{#if ServerAlias}}ServerAlias {{serverAliases}}{{/if}}
+  {{#if ServerAlias}}ServerAlias {{ServerAlias}}{{/if}}
+
+
+  SSLEngine On
+  SSLCertificateFile /etc/apache2/ssl/binaryalchemist.crt
+  SSLCertificateKeyFile /etc/apache2/ssl/binaryalchemist.key
+
   {{#if documentRoot}}DocumentRoot {{documentRoot}}
   <Directory "{{documentRoot}}">
       Options Indexes FollowSymLinks

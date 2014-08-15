@@ -1,3 +1,23 @@
 pre {
     overflow: hidden;
 }
+html, body {
+  height: 100%;
+}
+body{
+    overflow:auto;
+    padding-bottom: 50px; /* this needs to be bigger than footer height*/
+}
+div.container{
+    min-height: 100%;
+}
+footer {
+  position: relative;
+  margin-top: -50px; /* negative value of footer height */
+  height: 50px;
+  clear:both;
+  padding-top:20px;
+}
+h1, footer p {
+  text-align: center;
+}
