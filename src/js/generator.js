@@ -1,11 +1,8 @@
-$(function() {
+(function($) {
 
     function copyToClipboard(text) {
       window.prompt("Copy to clipboard: Ctrl+C, Enter", text);
     }
-    $( 'button.copy' ).on('click', function(){
-        copyToClipboard($('div.apache-config pre').html() );
-    });
 
     Handlebars.getTemplate = function(name) {
         console.log(Handlebars.templates);
@@ -36,7 +33,9 @@ $(function() {
                 Handlebars.templates[type][name] = '';
 
                 if(type === 'config'){
-                    response = response.replace(/>/g, '&gt;').replace(/</g, '&lt;').replace(/\n\s*\n/g, '\n');
+                console.log('before:', response);
+                    response = response.replace(/>/g, '&gt;').replace(/</g, '&lt;').replace(/\s*\n/g, '\n').replace(/\n\s*\n/g, '\n').replace(/\n\n/g, '\n');
+                console.log('after', response);
                 }
 
                 template = Handlebars.compile(response);
@@ -55,10 +54,8 @@ $(function() {
         context;
 
     function getUrlVars(){
-        var vars = [], hash;
-        var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-        for(var i = 0; i < hashes.length; i++)
-        {
+        var vars = [], hash, hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+        for(var i = 0; i < hashes.length; i++){
             hash = hashes[i].split('=');
             vars.push(hash[0]);
             vars[hash[0]] = hash[1];
@@ -67,36 +64,30 @@ $(function() {
     }
 
     function render(e){
-        if(typeof e !== 'undefined'){
+        if(typeof e !== 'undefined' && e.originalEvent.type !== 'keyup' ){
+            console.log(e);
             e.preventDefault();
         }
 
         var name = 'apache-config'
             context,
             template,
-            form,
+            form = $('form.apache-config'),
             config;
 
         template = Handlebars.getTemplate( name );
 
-        form = template['form'];
         config = template['config'];
 
-
-
-        context = $('form.apache-config').serializeArray().reduce(function(obj, item) {
+        context = form.serializeArray().reduce(function(obj, item) {
                                                 obj[item.name] = item.value;
                                                 return obj;
                                             }, {});
 
         sanatize(context);
-        console.log('context', context);
-
-
-        // html = form(context);
-        // $('form.apache-config').html(html);
 
         html = config(context);
+        html = html.replace(/\n\n\n/g, '\n\n');
         $('div.apache-config pre').html(html);
     }
 
@@ -108,39 +99,47 @@ $(function() {
 
     }
 
-    $('form.apache-config').on( 'change', render);
-    $('form.apache-config').on('click', 'button.refresh', render);
+    $(document).ready(function(){
 
-    $('form.apache-config').on('change', '#virtualHost-tgl', function(e){
-        console.log($(this).siblings('input[name="virtualHost"]'));
-        $(this).siblings('input[name="virtualHost"]').first().toggle().toggleDisabled();
+        var name = 'apache-config',
+            context,
+            template,
+            form,
+            config;
+
+        $( 'button.copy' ).on('click', function(){
+            copyToClipboard($('div.apache-config pre').html() );
+        });
+
+        $('#form-tabs').on('click', 'a', function (e) {
+              e.preventDefault();
+              $(this).tab('show');
+              console.log(e,this);
+        });
+
+        $('form.apache-config').
+            on('click', 'button.refresh', render).
+            on('change', render).
+            on('keyup', render);
+
+        $('form.apache-config').on('change', '#virtualHost-tgl', function(e){
+            $(this).siblings('input[name="virtualHost"]')
+                    .first()
+                    .toggle()
+                    .toggleDisabled();
+        });
+
+        template = Handlebars.getTemplate( name );
+
+        form = template['form'];
+        config = template['config'];
+
+
+        html = form( getUrlVars() );
+        $('form.apache-config').html(html);
+
+        render();
     });
 
-    $('form.apache-config').on('click', '#ssl-btn', function(e){
-        $('.ssl-btn').toggle();
 
-        if( $('#ssl-btn').hasClass('active') ){
-            $('#ssl-btn').removeClass('active');
-        }else{
-            $('#ssl-btn').addClass('active');
-        }
-    });
-
-    var name = 'apache-config',
-        context,
-        template,
-        form,
-        config;
-
-    template = Handlebars.getTemplate( name );
-
-    form = template['form'];
-    config = template['config'];
-
-
-    html = form( getUrlVars() );
-    $('form.apache-config').html(html);
-
-    render();
-
-});
+}(jQuery));
