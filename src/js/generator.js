@@ -1,7 +1,6 @@
 (function($) {
 
     Handlebars.getTemplate = function(name) {
-        console.log(Handlebars.templates);
         if (Handlebars.templates === undefined || Handlebars.templates['config'][name] === undefined || Handlebars.templates['form'][name] === undefined) {
             getTemplateHelper(name, 'config');
             getTemplateHelper(name, 'form');
@@ -18,7 +17,6 @@
             url : 'templates/' + type + '/' + name + '.handlebars',
             datatype: 'text/javascript',
             success : function(response, status, jqXHR) {
-         //       debugger;
                 var template;
                 if (Handlebars.templates === undefined) {
                     Handlebars.templates = {
@@ -29,9 +27,7 @@
                 Handlebars.templates[type][name] = '';
 
                 if(type === 'config'){
-                console.log('before:', response);
                     response = response.replace(/>/g, '&gt;').replace(/</g, '&lt;').replace(/\s*\n/g, '\n').replace(/\n\s*\n/g, '\n').replace(/\n\n/g, '\n');
-                console.log('after', response);
                 }
 
                 template = Handlebars.compile(response);
@@ -61,7 +57,6 @@
 
     function render(e){
         if(typeof e !== 'undefined' && e.originalEvent.type !== 'keyup' ){
-            console.log(e);
             e.preventDefault();
         }
 
@@ -88,7 +83,6 @@
     }
 
     function sanatize(context){
-        console.log('sanatize', context);
         if(typeof context.serverName !== 'undefined'){
             context.virtualHost = context.virtualHost || context.serverName;
         }
