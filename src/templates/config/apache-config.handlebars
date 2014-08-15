@@ -19,8 +19,8 @@
 
 
   SSLEngine On
-  SSLCertificateFile /etc/apache2/ssl/binaryalchemist.crt
-  SSLCertificateKeyFile /etc/apache2/ssl/binaryalchemist.key
+  SSLCertificateFile {{certFile}}
+  SSLCertificateKeyFile {{keyFile}}
 
   {{#if documentRoot}}DocumentRoot {{documentRoot}}
   <Directory "{{documentRoot}}">
