@@ -1,9 +1,5 @@
 (function($) {
 
-    function copyToClipboard(text) {
-      window.prompt("Copy to clipboard: Ctrl+C, Enter", text);
-    }
-
     Handlebars.getTemplate = function(name) {
         console.log(Handlebars.templates);
         if (Handlebars.templates === undefined || Handlebars.templates['config'][name] === undefined || Handlebars.templates['form'][name] === undefined) {
@@ -107,18 +103,8 @@
             form,
             config;
 
-        $( 'button.copy' ).on('click', function(){
-            copyToClipboard($('div.apache-config pre').html() );
-        });
-
-        $('#form-tabs').on('click', 'a', function (e) {
-              e.preventDefault();
-              $(this).tab('show');
-              console.log(e,this);
-        });
 
         $('form.apache-config').
-            on('click', 'button.refresh', render).
             on('change', render).
             on('keyup', render);
 

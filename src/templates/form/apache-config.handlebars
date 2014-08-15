@@ -24,20 +24,20 @@
 
     <label>Document Root</label>
     <input type="text" name="documentRoot" class="form-control" value="{{documentRoot}}" />
-
+  </div>
 
   <div class="tab-pane" id="mod-ssl">
 
-    <div class="ssl-btn form-group" style="display:none;clear:left;">
-      <input type="hidden" name="ssl" value="ssl" class="ssl"/>
+    <input type="hidden" name="ssl" value="ssl" class="ssl"/>
 
-      <label for="certFile" >Certificate File</label>
-      <input type="text" name="certFile" id="certFile" class="form-control" />
-      <br/>
-      <label for="keyFile">Key File</label>
-      <input type="text" name="keyFile" id="keyFile" class="form-control" />
-    </div>
+    <label for="certFile" >Certificate File</label>
+    <input type="text" name="certFile" id="certFile" class="form-control" />
+    <br/>
+    <label for="keyFile">Key File</label>
+    <input type="text" name="keyFile" id="keyFile" class="form-control" />
 
   </div>
+
+  <div class="tab-pane" id="mod-rewrite"></div>
 
 </div>
