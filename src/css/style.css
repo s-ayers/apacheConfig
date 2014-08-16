@@ -6,7 +6,8 @@ html, body {
 }
 body{
     overflow:auto;
-    padding-bottom: 50px; /* this needs to be bigger than footer height*/
+    padding-bottom: 75px; /* this needs to be bigger than footer height*/
+    background-color: #7b7b7b;
 }
 div.container{
     min-height: 100%;

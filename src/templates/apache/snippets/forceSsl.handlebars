@@ -1,0 +1,6 @@
+  {{#if site.serverName}}ServerName {{site.serverName}}{{/if}}
+  {{#if site.serverAlias}}ServerAlias {{site.serverAlias}}{{/if}}
+
+  RewriteEngine on
+  RewriteCond %{HTTPS} off
+  RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
