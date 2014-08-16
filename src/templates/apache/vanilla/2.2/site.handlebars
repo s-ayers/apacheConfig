@@ -1,0 +1,28 @@
+&lt;VirtualHost {{site.virtualHost}}:80&gt;
+
+{{#if_eq mod.ssl.enabled "required"}}{{>forceSsl}}{{else}}{{> default}}{{/if_eq}}
+&lt;/VirtualHost&gt;
+
+{{#if mod.ssl.enabled}}
+&lt;IfModule mod_ssl.c&gt;
+  &lt;VirtualHost {{site.virtualHost}}:443&gt;
+    {{#if site.serverName}}ServerName {{site.serverName}}{{/if}}
+    {{#if site.serverAlias}}ServerAlias {{site.serverAlias}}{{/if}}
+
+
+    SSLEngine On
+    SSLCertificateFile {{mod.ssl.cert}}
+    SSLCertificateKeyFile {{mod.ssl.key}}
+
+
+    {{#if site.documentRoot}}DocumentRoot {{site.documentRoot}}
+    &lt;Directory "{{site.documentRoot}}"&gt;
+        Options Indexes FollowSymLinks
+        Allow from all
+        Options -Indexes
+        Options +FollowSymLinks
+    &lt;/Directory&gt;
+  {{/if}}
+  &lt;/VirtualHost&gt;
+&lt;/IfModule&gt;
+{{/if}}

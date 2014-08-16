@@ -17,6 +17,7 @@
   <script src="js/handlebars-v1.3.0.js"></script>
   <script src="bootstrap-3.2.0/dist/js/bootstrap.js"></script>
   <script src="bootstrap-3.2.0/js/tab.js"></script>
+  <script src="js/form2js.js"></script>
   <script src="js/generator.js"></script>
 
 </head>
@@ -25,20 +26,22 @@
     <div class="container" style="width:94%;">
       <div class="row">
 
-        <div id="form-tabs" class="col-md-1" style="float:right;">
+        <div id="form-tabs" class="col-md-1 well" style="float:right;">
           <ul id="myTab" class="nav nav-pills nav-stacked">
             <li class="active"><a href="#home" data-toggle="pill">Home</a></li>
             <li><a href="#mod-ssl" data-toggle="pill">SSL</a></li>
-            <li><a href="#mod-rewrite" data-toggle="pill">ReWrite</a></li>
+            <!-- <li><a href="#mod-rewrite" data-toggle="pill">Rewrite</a></li> -->
           </ul>
         </div>
 
         <div class="col-md-5" style="float:right;">
-          <form class="apache-config" role="form"></form>
+          <form id="apache" class="apache-config well" role="form"></form>
         </div>
 
-        <div class="apache-config col-md-6">
-          <pre class="pre-scrollable"></pre>
+        <div class="apache-config col-md-6 well">
+          <!-- <h3>/etc/apache2/sites-avaliable/</h3> -->
+
+          <pre class="default prettyprint prettyprinted" style=""><code></code></pre>
         </div>
 
       </div>
@@ -49,5 +52,4 @@
   </p>
 </footer>
 </body>
-
 </html>

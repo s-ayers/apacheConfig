@@ -1,0 +1,12 @@
+  {{#if site.serverName}}ServerName {{site.serverName}}{{/if}}
+  {{#if site.serverAlias}}ServerAlias {{site.serverAlias}}{{/if}}
+
+  {{#if site.documentRoot}}DocumentRoot {{site.documentRoot}}
+
+  &lt;Directory "{{site.documentRoot}}"&gt;
+    Options Indexes FollowSymLinks
+    Allow from all
+    Options -Indexes
+    Options +FollowSymLinks
+  &lt;/Directory&gt;
+  {{/if}}
